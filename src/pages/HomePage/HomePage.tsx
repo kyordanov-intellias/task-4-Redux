@@ -1,21 +1,26 @@
-import React from "react";
+import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
+
+import { AppDispatch, RootState } from "../../store/store";
 import {
   useGetFeaturedMoviesQuery,
   useSearchMoviesQuery,
-} from "../store/api/movieApi";
+} from "../../store/api/movieApi";
 import {
   addToFavorites,
   removeFromFavorites,
-} from "../store/slices/moviesSlice";
-import { Movie } from "../types/movie";
-import SearchBar from "../components/molecules/SearchBar";
-import MovieGrid from "../components/organisms/MovieGrid";
-import "./HomePage.css"; // Import the CSS file
+} from "../../store/slices/moviesSlice";
 
-const HomePage: React.FC = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
+import { Movie } from "../../types/movie";
+
+import SearchBar from "../../components/molecules/SearchBar";
+
+import MovieGrid from "../../components/organisms/MovieGrid";
+import "./HomePage.css"; 
+
+
+const HomePage: FC = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const favorites = useSelector((state: RootState) => state.movies.favorites);
 

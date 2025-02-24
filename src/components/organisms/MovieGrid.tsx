@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import MovieCard from "../molecules/MovieCard";
@@ -10,7 +10,7 @@ interface MovieGridProps {
   onToggleFavorite: (movie: Movie) => void;
 }
 
-const MovieGrid: React.FC<MovieGridProps> = ({ movies, onToggleFavorite }) => {
+const MovieGrid: FC<MovieGridProps> = ({ movies, onToggleFavorite }) => {
   const favorites = useSelector((state: RootState) => state.movies.favorites);
 
   return (

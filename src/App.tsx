@@ -5,9 +5,14 @@ import { store } from "./store/store";
 import { ThemeProvider } from "./context/ThemeContext";
 import Layout from "./components/templates/Layout";
 
-const HomePage = lazy(() => import("./pages/HomePage"));
-const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
-const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const MovieDetailsPage = lazy(
+  () => import("./pages/MovieDetails/MovieDetailsPage")
+);
+const FavoritesPage = lazy(() => import("./pages/FavoritesPage/FavoritesPage"));
+const CreateMoviePage = lazy(
+  () => import("./pages/CreateMoviePage/CreateMovie")
+);
 
 function App() {
   return (
@@ -18,6 +23,7 @@ function App() {
             <Suspense fallback={<div>Loading...</div>}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/create-movie" element={<CreateMoviePage />} />
                 <Route path="/movie/:id" element={<MovieDetailsPage />} />
                 <Route path="/favorites" element={<FavoritesPage />} />
               </Routes>

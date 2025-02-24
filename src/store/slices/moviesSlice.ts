@@ -1,11 +1,10 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Movie, MovieDetails, SearchResponse } from '../../types/movie';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { Movie, MovieDetails } from "../../types/movie";
 
-const API_KEY = '6488c334';
-const BASE_URL = 'https://www.omdbapi.com';
+const API_KEY = "6488c334";
+const BASE_URL = "https://www.omdbapi.com";
 
-// Popular movies to fetch initially (you can modify this list)
-const POPULAR_MOVIES = ['Batman', 'Inception', 'Matrix', 'Avengers'];
+const POPULAR_MOVIES = ["Batman", "Inception", "Matrix", "Avengers"];
 
 interface MoviesState {
   searchResults: Movie[];
@@ -15,13 +14,12 @@ interface MoviesState {
   error: string | null;
 }
 
-// Load favorites from localStorage
 const loadFavorites = (): Movie[] => {
   try {
-    const savedFavorites = localStorage.getItem('movieFavorites');
+    const savedFavorites = localStorage.getItem("movieFavorites");
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   } catch (error) {
-    console.error('Error loading favorites:', error);
+    console.error("Error loading favorites:", error);
     return [];
   }
 };
@@ -35,46 +33,59 @@ const initialState: MoviesState = {
 };
 
 export const searchMovies = createAsyncThunk(
-  'movies/search',
+  "movies/search",
   async (searchTerm: string) => {
-    const response = await fetch(`${BASE_URL}/?apikey=${API_KEY}&s=${encodeURIComponent(searchTerm)}&type=movie`);
+    const response = await fetch(
+      `${BASE_URL}/?apikey=${API_KEY}&s=${encodeURIComponent(
+        searchTerm
+      )}&type=movie`
+    );
     if (!response.ok) {
-      throw new Error('Failed to fetch movies');
+      throw new Error("Failed to fetch movies");
     }
     const data = await response.json();
-    if (data.Response === 'False') {
-      throw new Error(data.Error || 'No movies found');
+    if (data.Response === "False") {
+      throw new Error(data.Error || "No movies found");
     }
     return data.Search || [];
   }
 );
 
 export const getMovieDetails = createAsyncThunk(
-  'movies/getDetails',
+  "movies/getDetails",
   async (imdbID: string) => {
-    const response = await fetch(`${BASE_URL}/?apikey=${API_KEY}&i=${imdbID}&plot=full`);
+    const response = await fetch(
+      `${BASE_URL}/?apikey=${API_KEY}&i=${imdbID}&plot=full`
+    );
     if (!response.ok) {
-      throw new Error('Failed to fetch movie details');
+      throw new Error("Failed to fetch movie details");
     }
     const data = await response.json();
-    if (data.Response === 'False') {
-      throw new Error(data.Error || 'Movie not found');
+    if (data.Response === "False") {
+      throw new Error(data.Error || "Movie not found");
     }
+    console.log(data);
+
     return data;
   }
 );
 
 export const fetchPopularMovies = createAsyncThunk(
-  'movies/fetchPopular',
+  "movies/fetchPopular",
   async () => {
-    const randomMovie = POPULAR_MOVIES[Math.floor(Math.random() * POPULAR_MOVIES.length)];
-    const response = await fetch(`${BASE_URL}/?apikey=${API_KEY}&s=${encodeURIComponent(randomMovie)}&type=movie`);
+    const randomMovie =
+      POPULAR_MOVIES[Math.floor(Math.random() * POPULAR_MOVIES.length)];
+    const response = await fetch(
+      `${BASE_URL}/?apikey=${API_KEY}&s=${encodeURIComponent(
+        randomMovie
+      )}&type=movie`
+    );
     if (!response.ok) {
-      throw new Error('Failed to fetch popular movies');
+      throw new Error("Failed to fetch popular movies");
     }
     const data = await response.json();
-    if (data.Response === 'False') {
-      throw new Error(data.Error || 'No movies found');
+    if (data.Response === "False") {
+      throw new Error(data.Error || "No movies found");
     }
     return data.Search || [];
   }
@@ -82,24 +93,28 @@ export const fetchPopularMovies = createAsyncThunk(
 
 const saveFavorites = (favorites: Movie[]) => {
   try {
-    localStorage.setItem('movieFavorites', JSON.stringify(favorites));
+    localStorage.setItem("movieFavorites", JSON.stringify(favorites));
   } catch (error) {
-    console.error('Error saving favorites:', error);
+    console.error("Error saving favorites:", error);
   }
 };
 
 const moviesSlice = createSlice({
-  name: 'movies',
+  name: "movies",
   initialState,
   reducers: {
     addToFavorites: (state, action: PayloadAction<Movie>) => {
-      if (!state.favorites.find(movie => movie.imdbID === action.payload.imdbID)) {
+      if (
+        !state.favorites.find((movie) => movie.imdbID === action.payload.imdbID)
+      ) {
         state.favorites.push(action.payload);
         saveFavorites(state.favorites);
       }
     },
     removeFromFavorites: (state, action: PayloadAction<string>) => {
-      state.favorites = state.favorites.filter(movie => movie.imdbID !== action.payload);
+      state.favorites = state.favorites.filter(
+        (movie) => movie.imdbID !== action.payload
+      );
       saveFavorites(state.favorites);
     },
     clearSearchResults: (state) => {
@@ -118,7 +133,7 @@ const moviesSlice = createSlice({
       })
       .addCase(searchMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch movies';
+        state.error = action.error.message || "Failed to fetch movies";
       })
       .addCase(getMovieDetails.pending, (state) => {
         state.loading = true;
@@ -130,7 +145,7 @@ const moviesSlice = createSlice({
       })
       .addCase(getMovieDetails.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch movie details';
+        state.error = action.error.message || "Failed to fetch movie details";
       })
       .addCase(fetchPopularMovies.pending, (state) => {
         state.loading = true;
@@ -142,10 +157,11 @@ const moviesSlice = createSlice({
       })
       .addCase(fetchPopularMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch popular movies';
+        state.error = action.error.message || "Failed to fetch popular movies";
       });
   },
 });
 
-export const { addToFavorites, removeFromFavorites, clearSearchResults } = moviesSlice.actions;
+export const { addToFavorites, removeFromFavorites, clearSearchResults } =
+  moviesSlice.actions;
 export default moviesSlice.reducer;

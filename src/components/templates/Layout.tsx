@@ -1,15 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { Sun, Moon, Film } from "lucide-react";
+import { Sun, Moon, Film, Plus } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import Button from "../atoms/Button";
-import "./Layout.css"; // Import the CSS file
+import "./Layout.css";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: FC<LayoutProps> = ({ children }) => {
   const { isDarkMode, toggleTheme } = useTheme();
 
   return (
@@ -21,8 +21,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <span>MovieDB</span>
           </Link>
           <div className="nav-links">
+            <Link to="/create-movie" className="favorites-link">
+              <Plus size={24} />
+            </Link>
             <Link to="/favorites" className="favorites-link">
-              Favorites
+              Profile
             </Link>
             <Button onClick={toggleTheme} variant="secondary">
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}

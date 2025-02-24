@@ -1,12 +1,12 @@
-import React from "react";
+import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
-import { removeFromFavorites } from "../store/slices/moviesSlice";
-import MovieGrid from "../components/organisms/MovieGrid";
-import { Movie } from "../types/movie";
+import { RootState } from "../../store/store";
+import { removeFromFavorites } from "../../store/slices/moviesSlice";
+import MovieGrid from "../../components/organisms/MovieGrid";
+import { Movie } from "../../types/movie";
 import "./FavoritesPage.css"; // Import the CSS file
 
-const FavoritesPage: React.FC = () => {
+const FavoritesPage: FC = () => {
   const dispatch = useDispatch();
   const favorites = useSelector((state: RootState) => state.movies.favorites);
 

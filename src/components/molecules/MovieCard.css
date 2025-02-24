@@ -11,11 +11,11 @@
   object-fit: cover;
 }
 
-.movie-details {
+.movie-details-card {
   padding: 16px;
 }
 
-.movie-title {
+.movie-title-card {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 8px;

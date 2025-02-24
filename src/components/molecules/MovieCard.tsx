@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Heart, HeartOff } from "lucide-react";
 import { Movie } from "../../types/movie";
@@ -11,7 +11,7 @@ interface MovieCardProps {
   onToggleFavorite: () => void;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({
+const MovieCard: FC<MovieCardProps> = ({
   movie,
   isFavorite,
   onToggleFavorite,
@@ -29,8 +29,8 @@ const MovieCard: React.FC<MovieCardProps> = ({
           className="movie-image"
         />
       </Link>
-      <div className="movie-details">
-        <h3 className="movie-title">{movie.Title}</h3>
+      <div className="movie-details-card">
+        <h3 className="movie-title-card">{movie.Title}</h3>
         <div className="movie-footer">
           <span className="movie-year">{movie.Year}</span>
           <Button

@@ -11,7 +11,7 @@
 }
 
 @media (min-width: 768px) {
-  .movie-details {
+  .movie-details-container .movie-details {
     flex-direction: row;
   }
 }

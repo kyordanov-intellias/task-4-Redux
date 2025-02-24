@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import {
   getMovieDetails,
   addToFavorites,
   removeFromFavorites,
-} from "../store/slices/moviesSlice";
-import Button from "../components/atoms/Button";
+} from "../../store/slices/moviesSlice";
+import Button from "../../components/atoms/Button";
 import { Heart, HeartOff } from "lucide-react";
 import "./MovieDetailsPage.css"; // Import the CSS file
 
-const MovieDetailsPage: React.FC = () => {
+const MovieDetailsPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const { selectedMovie, loading, error, favorites } = useSelector(
@@ -66,9 +66,6 @@ const MovieDetailsPage: React.FC = () => {
             </p>
             <p>
               <strong>Actors:</strong> {selectedMovie.Actors}
-            </p>
-            <p>
-              <strong>Rating:</strong> {selectedMovie.Rating}
             </p>
           </div>
           <Button
