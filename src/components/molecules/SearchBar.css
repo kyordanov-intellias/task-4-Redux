@@ -1,0 +1,26 @@
+.search-bar {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .search-input {
+    flex: 1;
+  }
+  
+  .search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .search-button:hover {
+    background-color: #1e40af;
+  }
+  
