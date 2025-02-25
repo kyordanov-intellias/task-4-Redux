@@ -1,46 +1,47 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addCreatedMovie } from '../../store/slices/userMoviesSlice';
-import './CreateMovie.css';
+import { useState, FC, ChangeEvent, FormEvent } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addCreatedMovie } from "../../store/slices/userMoviesSlice";
+import "./CreateMovie.css";
 
-const CreateMovieForm: React.FC = () => {
+const CreateMovieForm: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    Title: '',
-    Year: '',
-    Poster: '',
-    Plot: '',
-    Director: '',
-    Actors: '',
-    Genre: '',
-    Runtime: '',
+    Title: "",
+    Year: "",
+    Poster: "",
+    Director: "",
+    Actors: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(addCreatedMovie({
-      ...formData,
-      Type: 'movie',
-      imdbID: '', // This will be generated in the reducer
-    }));
+    dispatch(
+      addCreatedMovie({
+        ...formData,
+        Type: "movie",
+        imdbID: "",
+      })
+    );
     setFormData({
-      Title: '',
-      Year: '',
-      Poster: '',
-      Plot: '',
-      Director: '',
-      Actors: '',
-      Genre: '',
-      Runtime: '',
+      Title: "",
+      Year: "",
+      Poster: "",
+      Director: "",
+      Actors: "",
     });
+    navigate("/profile");
   };
 
   return (
@@ -84,17 +85,6 @@ const CreateMovieForm: React.FC = () => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="Plot">Plot</label>
-        <textarea
-          id="Plot"
-          name="Plot"
-          value={formData.Plot}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div className="form-group">
         <label htmlFor="Director">Director</label>
         <input
           type="text"
@@ -118,32 +108,9 @@ const CreateMovieForm: React.FC = () => {
         />
       </div>
 
-      <div className="form-group">
-        <label htmlFor="Genre">Genre</label>
-        <input
-          type="text"
-          id="Genre"
-          name="Genre"
-          value={formData.Genre}
-          onChange={handleChange}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="Runtime">Runtime</label>
-        <input
-          type="text"
-          id="Runtime"
-          name="Runtime"
-          value={formData.Runtime}
-          onChange={handleChange}
-          placeholder="e.g., 120 min"
-          required
-        />
-      </div>
-
-      <button type="submit" className="submit-button">Create Movie</button>
+      <button type="submit" className="submit-button">
+        Create Movie
+      </button>
     </form>
   );
 };

@@ -18,7 +18,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         <nav className="nav">
           <Link to="/" className="logo">
             <Film size={24} />
-            <span>MovieDB</span>
+            <span>Intellias Movie Picker</span>
           </Link>
           <div className="nav-links">
             <Link to="/create-movie" className="favorites-link">

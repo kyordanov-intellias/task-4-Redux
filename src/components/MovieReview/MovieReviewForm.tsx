@@ -50,7 +50,7 @@ const MovieReviewForm: React.FC<MovieReviewFormProps> = ({
   return (
     <form className="review-form" onSubmit={handleSubmit}>
       <h3>{existingReview ? "Edit Review" : "Add Review"}</h3>
-
+      
       <div className="form-group">
         <label htmlFor="rating">Rating (1-10)</label>
         <input
@@ -68,6 +68,7 @@ const MovieReviewForm: React.FC<MovieReviewFormProps> = ({
         <label htmlFor="review">Your Review</label>
         <textarea
           id="review"
+          className="review-form-textarea"
           value={review}
           onChange={(e) => setReview(e.target.value)}
           required

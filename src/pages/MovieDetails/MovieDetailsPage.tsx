@@ -13,6 +13,7 @@ import { Heart, HeartOff } from "lucide-react";
 import Button from "../../components/atoms/Button";
 import MovieReviewForm from "../../components/MovieReview/MovieReviewForm";
 import "./MovieDetailsPage.css";
+import Swal from "sweetalert2";
 
 const MovieDetailsPage: FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -40,12 +41,27 @@ const MovieDetailsPage: FC = () => {
   // }
 
   const handleDeleteReview = () => {
-    if (
-      review &&
-      window.confirm("Are you sure you want to delete this review?")
-    ) {
-      dispatch(deleteReview(review.id));
-    }
+    if (!review) return;
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteReview(review.id));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your review has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   const handleToggleFavorite = () => {
@@ -134,12 +150,15 @@ const MovieDetailsPage: FC = () => {
                   </div>
                 </div>
               ) : (
-                <button
-                  className="add-review-button"
-                  onClick={() => setShowReviewForm(true)}
-                >
-                  Add Review
-                </button>
+                <>
+                  <p style={{ marginBottom: "20px" }}>No reviews yes</p>
+                  <button
+                    className="add-review-button"
+                    onClick={() => setShowReviewForm(true)}
+                  >
+                    Add Review
+                  </button>
+                </>
               )}
             </div>
           )}
