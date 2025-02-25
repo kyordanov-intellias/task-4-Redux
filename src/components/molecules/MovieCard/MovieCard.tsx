@@ -18,21 +18,21 @@ const MovieCard: FC<MovieCardProps> = ({
   onToggleFavorite,
   onDeleteMovie,
 }) => {
+  const moviePoster =
+    movie.Poster !== "N/A"
+      ? movie.Poster
+      : "https://st4.depositphotos.com/14953852/22772/v/450/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
+
   return (
     <div className="movie-card">
-      {!movie.CreatedByMe && (
+      {movie.CreatedByMe ? (
+        <img src={moviePoster} alt={movie.Title} className="movie-image" />
+      ) : (
         <Link to={`/movie/${movie.imdbID}`}>
-          <img
-            src={
-              movie.Poster !== "N/A"
-                ? movie.Poster
-                : "https://st4.depositphotos.com/14953852/22772/v/450/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg"
-            }
-            alt={movie.Title}
-            className="movie-image"
-          />
+          <img src={moviePoster} alt={movie.Title} className="movie-image" />
         </Link>
       )}
+
       <div className="movie-details-card">
         <h3 className="movie-title-card">{movie.Title}</h3>
         <div className="movie-footer">
