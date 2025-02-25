@@ -7,12 +7,13 @@ export interface Movie {
 }
 
 export interface MovieDetails extends Movie {
-  Plot: string;
-  Director: string;
-  Actors: string;
-  Genre: string;
   Runtime: string;
-  Rating: string;
+  Genre: string;
+  Director: string;
+  Writer: string;
+  Actors: string;
+  Plot: string;
+  imdbRating: string;
 }
 
 export interface SearchResponse {

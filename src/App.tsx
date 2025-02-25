@@ -9,7 +9,7 @@ const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const MovieDetailsPage = lazy(
   () => import("./pages/MovieDetails/MovieDetailsPage")
 );
-const FavoritesPage = lazy(() => import("./pages/FavoritesPage/FavoritesPage"));
+const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage"));
 const CreateMoviePage = lazy(
   () => import("./pages/CreateMoviePage/CreateMovie")
 );
@@ -25,7 +25,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/create-movie" element={<CreateMoviePage />} />
                 <Route path="/movie/:id" element={<MovieDetailsPage />} />
-                <Route path="/favorites" element={<FavoritesPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
               </Routes>
             </Suspense>
           </Layout>

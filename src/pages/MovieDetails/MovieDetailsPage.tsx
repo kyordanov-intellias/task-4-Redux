@@ -1,92 +1,137 @@
-import { FC, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import {
-  getMovieDetails,
-  addToFavorites,
-  removeFromFavorites,
-} from "../../store/slices/moviesSlice";
-import Button from "../../components/atoms/Button";
+import  { FC, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../store/store';
+import { getMovieDetails, addToFavorites, removeFromFavorites } from '../../store/slices/moviesSlice';
+import { deleteReview } from '../../store/slices/movieReviewsSlice';
 import { Heart, HeartOff } from "lucide-react";
-import "./MovieDetailsPage.css"; // Import the CSS file
+import Button from "../../components/atoms/Button";
+import MovieReviewForm from '../../components/MovieReview/MovieReviewForm';
+import './MovieDetailsPage.css';
 
 const MovieDetailsPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const { selectedMovie, loading, error, favorites } = useSelector(
-    (state: RootState) => state.movies
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  
+  const movie = useSelector((state: RootState) => 
+    state.movies.selectedMovie
   );
+  
+  const review = useSelector((state: RootState) => 
+    state.movieReviews.reviews.find(review => review.movieId === id)
+  );
+
+  const favorites = useSelector((state: RootState) => state.movies.favorites);
+  const isFavorite = favorites.some(fav => fav.imdbID === movie?.imdbID);
 
   useEffect(() => {
     if (id) {
       dispatch(getMovieDetails(id));
     }
-  }, [id, dispatch]);
+  }, [dispatch, id]);
 
-  const isFavorite = favorites.some((movie) => movie.imdbID === id);
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
 
-  const handleToggleFavorite = () => {
-    if (!selectedMovie) return;
-
-    if (isFavorite) {
-      dispatch(removeFromFavorites(selectedMovie.imdbID));
-    } else {
-      dispatch(addToFavorites(selectedMovie));
+  const handleDeleteReview = () => {
+    if (review && window.confirm('Are you sure you want to delete this review?')) {
+      dispatch(deleteReview(review.id));
     }
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (!selectedMovie) return <div className="not-found">Movie not found</div>;
+  const handleToggleFavorite = () => {
+    if (!movie) return;
+    if (isFavorite) {
+      dispatch(removeFromFavorites(movie.imdbID));
+    } else {
+      dispatch(addToFavorites(movie));
+    }
+  };
 
   return (
     <div className="movie-details-container">
-      <div className="movie-details">
-        <img
-          src={
-            selectedMovie.Poster !== "N/A"
-              ? selectedMovie.Poster
-              : "https://via.placeholder.com/300x450"
-          }
-          alt={selectedMovie.Title}
-          className="movie-poster"
-        />
-        <div className="movie-info">
-          <h1 className="movie-title">{selectedMovie.Title}</h1>
+      <div className="movie-details-content">
+        <div className="movie-poster-section">
+          <img src={movie.Poster} alt={movie.Title} className="movie-poster" />
+        </div>
+        
+        <div className="movie-info-section">
+          <div className="movie-header">
+            <h1>{movie.Title}</h1>
+            <Button
+              onClick={handleToggleFavorite}
+              variant={isFavorite ? "danger" : "primary"}
+            >
+              {isFavorite ? <HeartOff size={20} /> : <Heart size={20} />}
+            </Button>
+          </div>
           <div className="movie-meta">
-            <span>{selectedMovie.Year}</span>
-            <span>{selectedMovie.Runtime}</span>
-            <span>{selectedMovie.Genre}</span>
+            <span>{movie.Year}</span>
+            <span>{movie.Runtime}</span>
+            <span>{movie.Genre}</span>
           </div>
-          <p className="movie-plot">{selectedMovie.Plot}</p>
-          <div className="movie-details-extra">
-            <p>
-              <strong>Director:</strong> {selectedMovie.Director}
-            </p>
-            <p>
-              <strong>Actors:</strong> {selectedMovie.Actors}
-            </p>
+          
+          <div className="movie-rating">
+            <span>IMDb Rating: {movie.imdbRating}</span>
           </div>
-          <Button
-            onClick={handleToggleFavorite}
-            variant={isFavorite ? "danger" : "primary"}
-            className="favorite-button"
-          >
-            {isFavorite ? (
-              <>
-                <HeartOff size={20} />
-                Remove from Favorites
-              </>
+          
+          <p className="movie-plot">{movie.Plot}</p>
+          
+          <div className="movie-details">
+            <p><strong>Director:</strong> {movie.Director}</p>
+            <p><strong>Writers:</strong> {movie.Writer}</p>
+            <p><strong>Actors:</strong> {movie.Actors}</p>
+          </div>
+
+          <div className="review-section">
+            <h2>Your Review</h2>
+            {review ? (
+              <div className="existing-review">
+                <div className="review-header">
+                  <div className="review-rating">Rating: {review.rating}/10</div>
+                  <div className="review-date">
+                    Last modified: {new Date(review.lastModified).toLocaleDateString()}
+                  </div>
+                </div>
+                <p className="review-content">{review.review}</p>
+                <div className="review-actions">
+                  <button 
+                    className="edit-review-button"
+                    onClick={() => setShowReviewForm(true)}
+                  >
+                    Edit Review
+                  </button>
+                  <button 
+                    className="delete-review-button"
+                    onClick={handleDeleteReview}
+                  >
+                    Delete Review
+                  </button>
+                </div>
+              </div>
             ) : (
-              <>
-                <Heart size={20} />
-                Add to Favorites
-              </>
+              <button 
+                className="add-review-button"
+                onClick={() => setShowReviewForm(true)}
+              >
+                Add Review
+              </button>
             )}
-          </Button>
+          </div>
         </div>
       </div>
+
+      {showReviewForm && (
+        <div className="review-form-overlay">
+          <MovieReviewForm
+            movie={movie}
+            existingReview={review}
+            onClose={() => setShowReviewForm(false)}
+          />
+        </div>
+      )}
     </div>
   );
 };

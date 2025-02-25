@@ -24,7 +24,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             <Link to="/create-movie" className="favorites-link">
               <Plus size={24} />
             </Link>
-            <Link to="/favorites" className="favorites-link">
+            <Link to="/profile" className="favorites-link">
               Profile
             </Link>
             <Button onClick={toggleTheme} variant="secondary">
