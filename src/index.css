@@ -183,6 +183,10 @@ body {
   animation: spin 1s linear infinite;
 }
 
+.suspence-loader {
+  margin: 0 auto;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

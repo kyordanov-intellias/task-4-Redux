@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addReview, updateReview } from '../../store/slices/movieReviewsSlice';
-import { Movie } from '../../types/movie';
-import './MovieReviewForm.css';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addReview, updateReview } from "../../store/slices/movieReviewsSlice";
+import { Movie } from "../../types/movie";
+import "./MovieReviewForm.css";
 
 interface MovieReviewFormProps {
   movie: Movie;
@@ -14,35 +14,43 @@ interface MovieReviewFormProps {
   onClose: () => void;
 }
 
-const MovieReviewForm: React.FC<MovieReviewFormProps> = ({ movie, existingReview, onClose }) => {
+const MovieReviewForm: React.FC<MovieReviewFormProps> = ({
+  movie,
+  existingReview,
+  onClose,
+}) => {
   const dispatch = useDispatch();
-  const [rating, setRating] = useState(existingReview?.rating || 5);
-  const [review, setReview] = useState(existingReview?.review || '');
+  const [rating, setRating] = useState(existingReview?.rating || 1);
+  const [review, setReview] = useState(existingReview?.review || "");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (existingReview) {
-      dispatch(updateReview({
-        id: existingReview.id,
-        review,
-        rating,
-      }));
+      dispatch(
+        updateReview({
+          id: existingReview.id,
+          review,
+          rating,
+        })
+      );
     } else {
-      dispatch(addReview({
-        movieId: movie.imdbID,
-        movieTitle: movie.Title,
-        rating,
-        review,
-      }));
+      dispatch(
+        addReview({
+          movieId: movie.imdbID,
+          movieTitle: movie.Title,
+          rating,
+          review,
+        })
+      );
     }
     onClose();
   };
 
   return (
     <form className="review-form" onSubmit={handleSubmit}>
-      <h3>{existingReview ? 'Edit Review' : 'Add Review'}</h3>
-      
+      <h3>{existingReview ? "Edit Review" : "Add Review"}</h3>
+
       <div className="form-group">
         <label htmlFor="rating">Rating (1-10)</label>
         <input
@@ -69,7 +77,7 @@ const MovieReviewForm: React.FC<MovieReviewFormProps> = ({ movie, existingReview
 
       <div className="button-group">
         <button type="submit" className="submit-button">
-          {existingReview ? 'Update Review' : 'Add Review'}
+          {existingReview ? "Update Review" : "Add Review"}
         </button>
         <button type="button" className="cancel-button" onClick={onClose}>
           Cancel
@@ -79,4 +87,4 @@ const MovieReviewForm: React.FC<MovieReviewFormProps> = ({ movie, existingReview
   );
 };
 
-export default MovieReviewForm; 
+export default MovieReviewForm;

@@ -120,6 +120,9 @@ const moviesSlice = createSlice({
     clearSearchResults: (state) => {
       state.searchResults = [];
     },
+    clearSelectedMovie: (state) => {
+      state.selectedMovie = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -162,6 +165,10 @@ const moviesSlice = createSlice({
   },
 });
 
-export const { addToFavorites, removeFromFavorites, clearSearchResults } =
-  moviesSlice.actions;
+export const {
+  addToFavorites,
+  removeFromFavorites,
+  clearSearchResults,
+  clearSelectedMovie,
+} = moviesSlice.actions;
 export default moviesSlice.reducer;
