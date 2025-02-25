@@ -13,6 +13,7 @@ const CreateMovieForm: FC = () => {
     Poster: "",
     Director: "",
     Actors: "",
+    CreatedByMe: true,
   });
 
   const handleChange = (
@@ -27,6 +28,7 @@ const CreateMovieForm: FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    console.log(formData);
     dispatch(
       addCreatedMovie({
         ...formData,
@@ -40,6 +42,7 @@ const CreateMovieForm: FC = () => {
       Poster: "",
       Director: "",
       Actors: "",
+      CreatedByMe: true,
     });
     navigate("/profile");
   };

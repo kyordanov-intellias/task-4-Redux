@@ -44,8 +44,11 @@ const userMoviesSlice = createSlice({
       );
       saveCreatedMovies(state.createdMovies);
     },
+    setCreatedMovies: (state, action: PayloadAction<Movie[]>) => {
+      state.createdMovies = action.payload;
+    },
   },
 });
 
-export const { addCreatedMovie, deleteCreatedMovie } = userMoviesSlice.actions;
-export default userMoviesSlice.reducer; 
+export const { addCreatedMovie, deleteCreatedMovie, setCreatedMovies } = userMoviesSlice.actions;
+export default userMoviesSlice.reducer;

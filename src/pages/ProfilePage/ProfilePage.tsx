@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
 import { removeFromFavorites } from "../../store/slices/moviesSlice";
@@ -7,10 +7,13 @@ import MovieGrid from "../../components/organisms/MovieGrid";
 import { Movie } from "../../types/movie";
 import "./ProfilePage.css";
 
+
 const ProfilePage: FC = () => {
   const dispatch = useDispatch();
   const favorites = useSelector((state: RootState) => state.movies.favorites);
-  const createdMovies = useSelector((state: RootState) => state.userMovies.createdMovies);
+  const createdMovies = useSelector(
+    (state: RootState) => state.userMovies.createdMovies
+  );
   const reviews = useSelector((state: RootState) => state.movieReviews.reviews);
 
   const handleToggleFavorite = (movie: Movie) => {
@@ -18,7 +21,7 @@ const ProfilePage: FC = () => {
   };
 
   const handleDeleteReview = (reviewId: string) => {
-    if (window.confirm('Are you sure you want to delete this review?')) {
+    if (window.confirm("Are you sure you want to delete this review?")) {
       dispatch(deleteReview(reviewId));
     }
   };
@@ -30,7 +33,10 @@ const ProfilePage: FC = () => {
         {favorites.length === 0 ? (
           <p className="section-message">No favorite movies yet.</p>
         ) : (
-          <MovieGrid movies={favorites} onToggleFavorite={handleToggleFavorite} />
+          <MovieGrid
+            movies={favorites}
+            onToggleFavorite={handleToggleFavorite}
+          />
         )}
       </section>
 
@@ -39,7 +45,10 @@ const ProfilePage: FC = () => {
         {createdMovies.length === 0 ? (
           <p className="section-message">No created movies yet.</p>
         ) : (
-          <MovieGrid movies={createdMovies} onToggleFavorite={handleToggleFavorite} />
+          <MovieGrid
+            movies={createdMovies}
+            onToggleFavorite={handleToggleFavorite}
+          />
         )}
       </section>
 
@@ -49,11 +58,13 @@ const ProfilePage: FC = () => {
           <p className="section-message">No reviews yet.</p>
         ) : (
           <div className="reviews-grid">
-            {reviews.map(review => (
+            {reviews.map((review) => (
               <div key={review.id} className="review-card">
                 <div className="review-header">
                   <h3>{review.movieTitle}</h3>
-                  <div className="review-rating">Rating: {review.rating}/10</div>
+                  <div className="review-rating">
+                    Rating: {review.rating}/10
+                  </div>
                 </div>
                 <p className="review-content">{review.review}</p>
                 <div className="review-footer">
