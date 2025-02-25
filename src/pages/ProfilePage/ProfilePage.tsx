@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
 import { removeFromFavorites } from "../../store/slices/moviesSlice";
 import { deleteReview } from "../../store/slices/movieReviewsSlice";
-import MovieGrid from "../../components/organisms/MovieGrid";
+import MovieGrid from "../../components/organisms/MovieGrid/MovieGrid";
 import { Movie } from "../../types/movie";
 import "./ProfilePage.css";
-
 
 const ProfilePage: FC = () => {
   const dispatch = useDispatch();

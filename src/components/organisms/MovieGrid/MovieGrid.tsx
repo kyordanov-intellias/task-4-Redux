@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import MovieCard from "../molecules/MovieCard";
-import { Movie } from "../../types/movie";
+import { RootState } from "../../../store/store";
+import MovieCard from "../../molecules/MovieCard/MovieCard";
+import { Movie } from "../../../types/movie";
 import "./MovieGrid.css";
 import Swal from "sweetalert2";
-import { setCreatedMovies } from "../../store/slices/userMoviesSlice";
+import { setCreatedMovies } from "../../../store/slices/userMoviesSlice";
 
 interface MovieGridProps {
   movies: Movie[];

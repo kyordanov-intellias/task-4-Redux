@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Heart, HeartOff, Trash2 } from "lucide-react";
-import { Movie } from "../../types/movie";
-import Button from "../atoms/Button";
+import { Movie } from "../../../types/movie";
+import Button from "../../atoms/Button/Button";
 import "./MovieCard.css";
 
 interface MovieCardProps {

@@ -64,8 +64,6 @@ export const getMovieDetails = createAsyncThunk(
     if (data.Response === "False") {
       throw new Error(data.Error || "Movie not found");
     }
-    console.log(data);
-
     return data;
   }
 );
@@ -117,6 +115,7 @@ const moviesSlice = createSlice({
       );
       saveFavorites(state.favorites);
     },
+    //Todo -> implement
     clearSearchResults: (state) => {
       state.searchResults = [];
     },

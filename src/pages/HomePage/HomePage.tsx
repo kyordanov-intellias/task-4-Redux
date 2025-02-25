@@ -13,11 +13,10 @@ import {
 
 import { Movie } from "../../types/movie";
 
-import SearchBar from "../../components/molecules/SearchBar";
+import SearchBar from "../../components/molecules/SearchBar/SearchBar";
 
-import MovieGrid from "../../components/organisms/MovieGrid";
-import "./HomePage.css"; 
-
+import MovieGrid from "../../components/organisms/MovieGrid/MovieGrid";
+import "./HomePage.css";
 
 const HomePage: FC = () => {
   const [searchTerm, setSearchTerm] = useState("");

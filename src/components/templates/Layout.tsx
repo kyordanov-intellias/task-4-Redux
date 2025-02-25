@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { Sun, Moon, Film, Plus } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
-import Button from "../atoms/Button";
+import Button from "../atoms/Button/Button";
 import "./Layout.css";
 
 interface LayoutProps {

@@ -10,8 +10,8 @@ import {
 } from "../../store/slices/moviesSlice";
 import { deleteReview } from "../../store/slices/movieReviewsSlice";
 import { Heart, HeartOff } from "lucide-react";
-import Button from "../../components/atoms/Button";
-import MovieReviewForm from "../../components/MovieReview/MovieReviewForm";
+import Button from "../../components/atoms/Button/Button";
+import MovieReviewForm from "../../components/MovieReviewForm/MovieReviewForm";
 import "./MovieDetailsPage.css";
 import Swal from "sweetalert2";
 

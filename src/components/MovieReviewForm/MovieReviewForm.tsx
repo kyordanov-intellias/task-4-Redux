@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, FC, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { addReview, updateReview } from "../../store/slices/movieReviewsSlice";
 import { Movie } from "../../types/movie";
@@ -14,7 +14,7 @@ interface MovieReviewFormProps {
   onClose: () => void;
 }
 
-const MovieReviewForm: React.FC<MovieReviewFormProps> = ({
+const MovieReviewForm: FC<MovieReviewFormProps> = ({
   movie,
   existingReview,
   onClose,
@@ -23,7 +23,7 @@ const MovieReviewForm: React.FC<MovieReviewFormProps> = ({
   const [rating, setRating] = useState(existingReview?.rating || 1);
   const [review, setReview] = useState(existingReview?.review || "");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (existingReview) {
@@ -50,7 +50,7 @@ const MovieReviewForm: React.FC<MovieReviewFormProps> = ({
   return (
     <form className="review-form" onSubmit={handleSubmit}>
       <h3>{existingReview ? "Edit Review" : "Add Review"}</h3>
-      
+
       <div className="form-group">
         <label htmlFor="rating">Rating (1-10)</label>
         <input

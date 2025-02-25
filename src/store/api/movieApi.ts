@@ -4,7 +4,6 @@ import { Movie, MovieDetails, SearchResponse } from '../../types/movie';
 const API_KEY = '6488c334';
 const BASE_URL = 'https://www.omdbapi.com';
 
-// List of movies to fetch on the homepage
 const FEATURED_MOVIES = [
   'tt0468569', // The Dark Knight
   'tt0816692', // Interstellar

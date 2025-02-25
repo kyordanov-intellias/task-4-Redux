@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import "./Input.css";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -1,8 +1,8 @@
-import React, { FC, useState } from "react";
+import { FC, useState, FormEvent } from "react";
 import { Search } from "lucide-react";
-import Input from "../atoms/Input";
-import Button from "../atoms/Button";
-import "./SearchBar.css"; // Import the CSS file
+import Input from "../../atoms/Input/Input";
+import Button from "../../atoms/Button/Button";
+import "./SearchBar.css";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -11,7 +11,7 @@ interface SearchBarProps {
 const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
       onSearch(query.trim());

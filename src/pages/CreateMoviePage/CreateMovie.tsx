@@ -28,7 +28,6 @@ const CreateMovieForm: FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(formData);
     dispatch(
       addCreatedMovie({
         ...formData,

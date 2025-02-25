@@ -8,7 +8,7 @@ import { PacmanLoader } from "react-spinners";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const MovieDetailsPage = lazy(
-  () => import("./pages/MovieDetails/MovieDetailsPage")
+  () => import("./pages/MovieDetailsPage/MovieDetailsPage")
 );
 const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage"));
 const CreateMoviePage = lazy(
