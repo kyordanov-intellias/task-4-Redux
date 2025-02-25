@@ -1,29 +1,16 @@
 import { FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store/store";
-import { removeFromFavorites } from "../../store/slices/moviesSlice";
-import { deleteReview } from "../../store/slices/movieReviewsSlice";
+import { useProfilePageLogic } from "../../hooks/useProfilePageLogic";
 import MovieGrid from "../../components/organisms/MovieGrid/MovieGrid";
-import { Movie } from "../../types/movie";
 import "./ProfilePage.css";
 
 const ProfilePage: FC = () => {
-  const dispatch = useDispatch();
-  const favorites = useSelector((state: RootState) => state.movies.favorites);
-  const createdMovies = useSelector(
-    (state: RootState) => state.userMovies.createdMovies
-  );
-  const reviews = useSelector((state: RootState) => state.movieReviews.reviews);
-
-  const handleToggleFavorite = (movie: Movie) => {
-    dispatch(removeFromFavorites(movie.imdbID));
-  };
-
-  const handleDeleteReview = (reviewId: string) => {
-    if (window.confirm("Are you sure you want to delete this review?")) {
-      dispatch(deleteReview(reviewId));
-    }
-  };
+  const {
+    favorites,
+    createdMovies,
+    reviews,
+    handleToggleFavorite,
+    handleDeleteReview,
+  } = useProfilePageLogic();
 
   return (
     <div className="profile-container">

@@ -1,28 +1,15 @@
 import { FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store/store";
-import { removeFromFavorites } from "../../store/slices/moviesSlice";
-import MovieGrid from "../../components/organisms/MovieGrid/MovieGrid";
-import { Movie } from "../../types/movie";
-import "./FavoritesPage.css"; // Import the CSS file
+import { useFavorites } from "../../hooks/useFavorites";
+import FavoritesSection from "./FavoritesSetion";
 
 const FavoritesPage: FC = () => {
-  const dispatch = useDispatch();
-  const favorites = useSelector((state: RootState) => state.movies.favorites);
-
-  const handleToggleFavorite = (movie: Movie) => {
-    dispatch(removeFromFavorites(movie.imdbID));
-  };
+  const { favorites, handleToggleFavorite } = useFavorites();
 
   return (
-    <div className="favorites-container">
-      <h1 className="favorites-title">My Favorites</h1>
-      {favorites.length === 0 ? (
-        <p className="favorites-message">No favorite movies yet.</p>
-      ) : (
-        <MovieGrid movies={favorites} onToggleFavorite={handleToggleFavorite} />
-      )}
-    </div>
+    <FavoritesSection
+      favorites={favorites}
+      onToggleFavorite={handleToggleFavorite}
+    />
   );
 };
 
